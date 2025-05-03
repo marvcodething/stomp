@@ -4,6 +4,8 @@ import React, { useRef } from "react";
 import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
 import { MarkersPlugin } from '@photo-sphere-viewer/markers-plugin';
 import { CompassPlugin } from '@photo-sphere-viewer/compass-plugin';
+import Link from 'next/link';
+
 
 import '@photo-sphere-viewer/markers-plugin/index.css';
 import '@photo-sphere-viewer/compass-plugin/index.css';

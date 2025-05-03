@@ -7,6 +7,8 @@ import { CompassPlugin } from '@photo-sphere-viewer/compass-plugin';
 
 import '@photo-sphere-viewer/markers-plugin/index.css';
 import '@photo-sphere-viewer/compass-plugin/index.css';
+import Link from 'next/link';
+
 
 export default function House3() {
   const viewerRef = useRef(null);
