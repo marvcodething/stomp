@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef } from "react";
+import Link from "next/link";
 import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
 import { MarkersPlugin } from '@photo-sphere-viewer/markers-plugin';
 import { CompassPlugin } from '@photo-sphere-viewer/compass-plugin';
@@ -11,6 +12,7 @@ import '@photo-sphere-viewer/compass-plugin/index.css';
 export default function House1() {
   const viewerRef = useRef(null);
   const markersPluginRef = useRef(null);
+
   const markerData = [
     {
       id: "video",
@@ -56,9 +58,7 @@ export default function House1() {
   ];
 
   const plugins = [
-    [MarkersPlugin, {
-      markers: markerData
-    }],
+    [MarkersPlugin, { markers: markerData }],
     [CompassPlugin, {
       hotspots: [
         { yaw: '0deg' },
@@ -77,7 +77,6 @@ export default function House1() {
 
   const navbar = [
     'zoom',
-    
     'caption',
     'fullscreen',
     {
@@ -93,16 +92,12 @@ export default function House1() {
       onClick: (viewer) => {
         const plugin = viewer.getPlugin(MarkersPlugin);
         if (!plugin) return;
-        
+
         const markers = plugin.getMarkers();
         if (markers.length > 0) {
-          // Remove all markers
           plugin.clearMarkers();
         } else {
-          // Re-add all markers
-          markerData.forEach(marker => {
-            plugin.addMarker(marker);
-          });
+          markerData.forEach(marker => plugin.addMarker(marker));
         }
       },
     },
@@ -120,9 +115,19 @@ export default function House1() {
         onReady={handleReady}
         navbar={navbar}
       />
-      <a href="/" style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 1000, color: 'white', textDecoration: 'none' }}>
+      <Link
+        href="/"
+        style={{
+          position: 'absolute',
+          top: '20px',
+          left: '20px',
+          zIndex: 1000,
+          color: 'white',
+          textDecoration: 'none'
+        }}
+      >
         ← Back to town
-      </a>
+      </Link>
     </div>
   );
 }

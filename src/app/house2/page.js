@@ -74,9 +74,19 @@ export default function House2() {
         onReady={handleReady}
         navbar={navbar}
       />
-      <a href="/" style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 1000, color: 'white', textDecoration: 'none' }}>
+      <Link
+        href="/"
+        style={{
+          position: 'absolute',
+          top: '20px',
+          left: '20px',
+          zIndex: 1000,
+          color: 'white',
+          textDecoration: 'none'
+        }}
+      >
         ← Back to town
-      </a>
+      </Link>
     </div>
   );
 }
