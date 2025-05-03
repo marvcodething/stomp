@@ -16,8 +16,12 @@ const PhaserGame = () => {
     }
   }, []);
 
-  const move = (dir) => {
+  const moveStart = (dir) => {
     movement.current[dir] = true;
+  };
+
+  const moveEnd = (dir) => {
+    movement.current[dir] = false;
   };
 
   const enterHouse = () => {
@@ -37,36 +41,12 @@ const PhaserGame = () => {
       }
 
       create() {
-        this.anims.create({
-          key: 'left',
-          frames: this.anims.generateFrameNumbers('sheet', { frames: [0, 1, 2, 3, 4, 5] }),
-          frameRate: 20,
-          repeat: -1
-        });
-
-        this.anims.create({
-          key: 'right',
-          frames: this.anims.generateFrameNumbers('sheet', { frames: [0, 1, 2, 3, 4, 5] }),
-          frameRate: 20,
-          repeat: -1
-        });
-
-        this.anims.create({
-          key: 'up',
-          frames: this.anims.generateFrameNumbers('sheet', { frames: [6, 7, 8, 9] }),
-          frameRate: 12,
-          repeat: -1
-        });
-
-        this.anims.create({
-          key: 'down',
-          frames: this.anims.generateFrameNumbers('sheet', { frames: [10, 11, 12, 13] }),
-          frameRate: 12,
-          repeat: -1
-        });
+        this.anims.create({ key: 'left', frames: this.anims.generateFrameNumbers('sheet', { frames: [0, 1, 2, 3, 4, 5] }), frameRate: 20, repeat: -1 });
+        this.anims.create({ key: 'right', frames: this.anims.generateFrameNumbers('sheet', { frames: [0, 1, 2, 3, 4, 5] }), frameRate: 20, repeat: -1 });
+        this.anims.create({ key: 'up', frames: this.anims.generateFrameNumbers('sheet', { frames: [6, 7, 8, 9] }), frameRate: 12, repeat: -1 });
+        this.anims.create({ key: 'down', frames: this.anims.generateFrameNumbers('sheet', { frames: [10, 11, 12, 13] }), frameRate: 12, repeat: -1 });
 
         this.add.image(0, 0, 'background').setOrigin(0).setScale(1);
-
         this.player = this.add.sprite(50, 270, 'sheet', 10);
         this.physics.add.existing(this.player);
         this.player.body.setCollideWorldBounds(true);
@@ -74,45 +54,29 @@ const PhaserGame = () => {
         this.houseZone = this.add.zone(60, 185, 30, 30);
         this.houseZone2 = this.add.zone(216, 105, 30, 30);
         this.houseZone3 = this.add.zone(466.545, 110, 30, 20);
+        this.water1 = this.add.zone(400, 350, 455, 80);
+        this.physics.add.existing(this.water1, true);
+        this.physics.add.collider(this.player, this.water1);
+        this.water2 = this.add.zone(505, 280, 450, 80);
+        this.physics.add.existing(this.water2, true);
+        this.physics.add.collider(this.player, this.water2);
 
-        this.water1 = this.add.zone(400, 350, 455, 80); // Adjust size as needed
-        this.physics.add.existing(this.water1, true); // Make it a static body
-        this.physics.add.collider(this.player, this.water1); // Prevent player from passing through
-        
-        this.water2 = this.add.zone(505,280,450,80,);
-        this.physics.add.existing(this.water2, true); // Make it a static body
-        this.physics.add.collider(this.player, this.water2); // Prevent player from passing through
-        
-
-        this.physics.world.enable([this.houseZone, this.houseZone2, this.houseZone3,]);
+        this.physics.world.enable([this.houseZone, this.houseZone2, this.houseZone3]);
         [this.houseZone, this.houseZone2, this.houseZone3].forEach(zone => {
           zone.body.setAllowGravity(false);
           zone.body.moves = false;
         });
 
-        const walls = [
-          { x: 60, y: 152 },
-          { x: 214, y: 75 },
-          { x: 466.545, y: 76 }
-        ];
-
+        const walls = [{ x: 60, y: 152 }, { x: 214, y: 75 }, { x: 466.545, y: 76 }];
         walls.forEach(({ x, y }) => {
           const wall = this.add.zone(x, y, 50, 50);
           this.physics.add.existing(wall, true);
           this.physics.add.collider(this.player, wall);
         });
 
-        this.physics.add.overlap(this.player, this.houseZone, () => {
-          currentRoute.current = '/house1';
-        });
-
-        this.physics.add.overlap(this.player, this.houseZone2, () => {
-          currentRoute.current = '/house2';
-        });
-
-        this.physics.add.overlap(this.player, this.houseZone3, () => {
-          currentRoute.current = '/house3';
-        });
+        this.physics.add.overlap(this.player, this.houseZone, () => { currentRoute.current = '/house1'; });
+        this.physics.add.overlap(this.player, this.houseZone2, () => { currentRoute.current = '/house2'; });
+        this.physics.add.overlap(this.player, this.houseZone3, () => { currentRoute.current = '/house3'; });
 
         this.wasd = {
           up: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
@@ -152,8 +116,6 @@ const PhaserGame = () => {
         if (currentRoute.current && Phaser.Input.Keyboard.JustDown(this.eKey)) {
           window.location.href = currentRoute.current;
         }
-
-        Object.keys(touch).forEach(key => touch[key] = false);
       }
     }
 
@@ -165,9 +127,7 @@ const PhaserGame = () => {
       backgroundColor: '#000000',
       physics: {
         default: 'arcade',
-        arcade: {
-          debug: false,
-        },
+        arcade: { debug: false },
       },
       scene: MyGame,
       parent: 'phaser-container',
@@ -236,14 +196,33 @@ const PhaserGame = () => {
           zIndex: 20,
         }}>
           <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-            <button onTouchStart={() => move('up')} style={btnStyle}>↑</button>
+            <button
+              onTouchStart={() => moveStart('up')}
+              onTouchEnd={() => moveEnd('up')}
+              style={btnStyle}
+            >↑</button>
           </div>
           <div style={{ display: 'flex', gap: '10px' }}>
-            <button onTouchStart={() => move('left')} style={btnStyle}>←</button>
-            <button onTouchStart={() => move('down')} style={btnStyle}>↓</button>
-            <button onTouchStart={() => move('right')} style={btnStyle}>→</button>
+            <button
+              onTouchStart={() => moveStart('left')}
+              onTouchEnd={() => moveEnd('left')}
+              style={btnStyle}
+            >←</button>
+            <button
+              onTouchStart={() => moveStart('down')}
+              onTouchEnd={() => moveEnd('down')}
+              style={btnStyle}
+            >↓</button>
+            <button
+              onTouchStart={() => moveStart('right')}
+              onTouchEnd={() => moveEnd('right')}
+              style={btnStyle}
+            >→</button>
           </div>
-          <button onTouchStart={enterHouse} style={{ ...btnStyle, marginTop: '10px' }}>
+          <button
+            onTouchStart={enterHouse}
+            style={{ ...btnStyle, marginTop: '10px' }}
+          >
             Enter
           </button>
         </div>
