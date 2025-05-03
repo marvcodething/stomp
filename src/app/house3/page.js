@@ -68,7 +68,7 @@ export default function House3() {
     <div style={{ height: '100vh', width: '100%', position: 'relative' }}>
       <ReactPhotoSphereViewer
         ref={viewerRef}
-        src={'images/green1st.jpg'} // Replace with your new image path
+        src={'images/green1st.jpeg'} // Replace with your new image path
         height={"100vh"}
         width={"100%"}
         plugins={plugins}
