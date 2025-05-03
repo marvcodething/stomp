@@ -20,7 +20,7 @@ export default function House2() {
         id: "video",
         image: "video.png",
         anchor: "bottom center",
-        position: { yaw: "320deg", pitch: "-5deg" },
+        position: { yaw: "215deg", pitch: "-5deg" },
         size: { width: 96, height: 96 },
         tooltip: "Click to watch video",
         content: `<div><header style="font-size: 24px; font-weight: bold;">stomping ground</header><br/><iframe width="560" height="315" src="https://www.youtube.com/embed/Ynn_dugzWIw?si=5_knUElPExfyD_4N" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`

@@ -15,12 +15,11 @@ export default function House3() {
   const markersPluginRef = useRef(null);
 
   const markerData = [
-    // Example marker
     {
         id: "video",
         image: "video.png",
         anchor: "bottom center",
-        position: { yaw: "60deg", pitch: "-5deg" },
+        position: { yaw: "235deg", pitch: "-5deg" },
         size: { width: 96, height: 96 },
         tooltip: "Click to watch video",
         content: `<div><header style="font-size: 24px; font-weight: bold;">stomping ground</header><br/><iframe width="560" height="315" src="https://www.youtube.com/embed/tjb8KlIb21k?si=EMMFIJ7hb_Ecd9pD" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
