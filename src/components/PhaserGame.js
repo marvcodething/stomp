@@ -75,7 +75,16 @@ const PhaserGame = () => {
         this.houseZone2 = this.add.zone(216, 105, 30, 30);
         this.houseZone3 = this.add.zone(466.545, 110, 30, 20);
 
-        this.physics.world.enable([this.houseZone, this.houseZone2, this.houseZone3]);
+        this.water1 = this.add.zone(400, 350, 455, 80); // Adjust size as needed
+        this.physics.add.existing(this.water1, true); // Make it a static body
+        this.physics.add.collider(this.player, this.water1); // Prevent player from passing through
+        
+        this.water2 = this.add.zone(505,280,450,80,);
+        this.physics.add.existing(this.water2, true); // Make it a static body
+        this.physics.add.collider(this.player, this.water2); // Prevent player from passing through
+        
+
+        this.physics.world.enable([this.houseZone, this.houseZone2, this.houseZone3,]);
         [this.houseZone, this.houseZone2, this.houseZone3].forEach(zone => {
           zone.body.setAllowGravity(false);
           zone.body.moves = false;
