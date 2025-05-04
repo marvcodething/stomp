@@ -79,11 +79,24 @@ const PhaserGame = () => {
         this.physics.add.overlap(this.player, this.houseZone3, () => { currentRoute.current = '/house3'; });
 
         this.wasd = {
-          up: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-          down: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-          left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-          right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+          up: this.input.keyboard.addKeys({
+            w: Phaser.Input.Keyboard.KeyCodes.W,
+            up: Phaser.Input.Keyboard.KeyCodes.UP,
+          }),
+          down: this.input.keyboard.addKeys({
+            s: Phaser.Input.Keyboard.KeyCodes.S,
+            down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+          }),
+          left: this.input.keyboard.addKeys({
+            a: Phaser.Input.Keyboard.KeyCodes.A,
+            left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+          }),
+          right: this.input.keyboard.addKeys({
+            d: Phaser.Input.Keyboard.KeyCodes.D,
+            right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+          }),
         };
+
         this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
       }
 
@@ -96,17 +109,17 @@ const PhaserGame = () => {
         player.body.setVelocity(0);
         player.setFlipX(false);
 
-        if (left.isDown || touch.left) {
+        if (left.a.isDown || left.left.isDown || touch.left) {
           player.body.setVelocityX(-speed);
           player.play('left', true);
-        } else if (right.isDown || touch.right) {
+        } else if (right.d.isDown || right.right.isDown || touch.right) {
           player.body.setVelocityX(speed);
           player.setFlipX(true);
           player.play('right', true);
-        } else if (up.isDown || touch.up) {
+        } else if (up.w.isDown || up.up.isDown || touch.up) {
           player.body.setVelocityY(-speed);
           player.play('up', true);
-        } else if (down.isDown || touch.down) {
+        } else if (down.s.isDown || down.down.isDown || touch.down) {
           player.body.setVelocityY(speed);
           player.play('down', true);
         } else {
