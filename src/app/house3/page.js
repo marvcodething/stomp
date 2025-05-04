@@ -23,6 +23,46 @@ export default function House3() {
       size: { width: 96, height: 96 },
       tooltip: "Click to watch video",
     },
+    {
+      id: "blankets",
+      image: "heart.png",
+      anchor: "bottom center",
+      position: { yaw: "7deg", pitch: "337.deg" },
+      size: { width: 32, height: 32 },
+      tooltip: `<div><header style="font-size: 24px; font-weight: bold;">Books</header>He'll never read these.</div>`,
+    },
+    {
+      id: "bed",
+      image: "heart.png",
+      anchor: "bottom center",
+      position: { yaw: "215deg", pitch: "337.deg" },
+      size: { width: 32, height: 32 },
+      tooltip: `<div><header style="font-size: 24px; font-weight: bold;">Bed</header>A guy needs his beauty rest.</div>`,
+    },
+    {
+      id: "cashews",
+      image: "heart.png",
+      anchor: "bottom center",
+      position: { yaw: "195deg", pitch: "332.deg" },
+      size: { width: 32, height: 32 },
+      tooltip: `<div><header style="font-size: 24px; font-weight: bold;">Cashews</header>Don't feed him these... He's allergic.</div>`,
+    },
+    {
+      id: "wall",
+      image: "heart.png",
+      anchor: "bottom center",
+      position: { yaw: "195deg", pitch: "355.deg" },
+      size: { width: 32, height: 32 },
+      tooltip: `<div><header style="font-size: 24px; font-weight: bold;">Memory Wall</header>What's life without the people we love?</div>`,
+    },
+    {
+      id: "poster",
+      image: "heart.png",
+      anchor: "bottom center",
+      position: { yaw: "152deg", pitch: "365.deg" },
+      size: { width: 32, height: 32 },
+      tooltip: `<div><header style="font-size: 24px; font-weight: bold;">Poster</header>We still don't!</div>`,
+    },
   ];
 
   const plugins = [
