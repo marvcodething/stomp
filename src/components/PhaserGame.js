@@ -54,15 +54,23 @@ const PhaserGame = () => {
         this.houseZone = this.add.zone(60, 185, 30, 30);
         this.houseZone2 = this.add.zone(216, 105, 30, 30);
         this.houseZone3 = this.add.zone(466.545, 110, 30, 20);
+
+        this.sign = this.add.zone(340,100,50,40);
+        this.physics.add.existing(this.sign, true);
+        this.physics.add.collider(this.player, this.sign);
+        this.signZone = this.add.zone(340,140,50,60);
+
         this.water1 = this.add.zone(400, 350, 455, 80);
         this.physics.add.existing(this.water1, true);
         this.physics.add.collider(this.player, this.water1);
+
         this.water2 = this.add.zone(505, 280, 450, 80);
         this.physics.add.existing(this.water2, true);
         this.physics.add.collider(this.player, this.water2);
+        
 
-        this.physics.world.enable([this.houseZone, this.houseZone2, this.houseZone3]);
-        [this.houseZone, this.houseZone2, this.houseZone3].forEach(zone => {
+        this.physics.world.enable([this.houseZone, this.houseZone2, this.houseZone3, this.signZone]);
+        [this.houseZone, this.houseZone2, this.houseZone3, this.signZone].forEach(zone => {
           zone.body.setAllowGravity(false);
           zone.body.moves = false;
         });
@@ -77,6 +85,7 @@ const PhaserGame = () => {
         this.physics.add.overlap(this.player, this.houseZone, () => { currentRoute.current = '/house1'; });
         this.physics.add.overlap(this.player, this.houseZone2, () => { currentRoute.current = '/house2'; });
         this.physics.add.overlap(this.player, this.houseZone3, () => { currentRoute.current = '/house3'; });
+        this.physics.add.overlap(this.player, this.signZone, () => {currentRoute.current = '/info';});
 
         this.wasd = {
           up: this.input.keyboard.addKeys({
@@ -187,13 +196,14 @@ const PhaserGame = () => {
           top: '20px',
           left: '50%',
           transform: 'translateX(-50%)',
-          color: 'white',
+          color: 'black',
           fontFamily: 'sans-serif',
           fontSize: '16px',
           zIndex: 10,
           pointerEvents: 'none',
+    
         }}>
-          Press <b>E</b> to enter a house
+          Press <b>E</b> to enter a house or interact
         </div>
       )}
 
