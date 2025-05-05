@@ -183,6 +183,8 @@ const PhaserGame = () => {
     backgroundColor: '#444',
     color: 'white',
     touchAction: 'none',
+    userSelect: 'none',
+    WebkitUserSelect: 'none',
   };
 
   return (
@@ -192,7 +194,7 @@ const PhaserGame = () => {
       height: 'calc(var(--vh, 1vh) * 100)',
       margin: 0,
       padding: 0,
-      overflow: 'hidden', // 🟢 Only applies here, not globally
+      overflow: 'hidden',
       backgroundColor: 'black',
     }}>
       <div id="phaser-container" style={{ width: '100%', height: '100%' }} />
