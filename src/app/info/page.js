@@ -20,6 +20,7 @@ export default function Info() {
           width={1200}
           height={600}
           className="w-full h-auto rounded-lg"
+ 
         />
       </div>
 

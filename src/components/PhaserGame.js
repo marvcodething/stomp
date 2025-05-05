@@ -13,6 +13,14 @@ const PhaserGame = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsMobile(/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
+
+      // Set mobile-safe 100vh unit
+      const setVh = () => {
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+      };
+      setVh();
+      window.addEventListener('resize', setVh);
+      return () => window.removeEventListener('resize', setVh);
     }
   }, []);
 
@@ -55,10 +63,10 @@ const PhaserGame = () => {
         this.houseZone2 = this.add.zone(216, 105, 30, 30);
         this.houseZone3 = this.add.zone(466.545, 110, 30, 20);
 
-        this.sign = this.add.zone(340,100,50,40);
+        this.sign = this.add.zone(340, 100, 50, 40);
         this.physics.add.existing(this.sign, true);
         this.physics.add.collider(this.player, this.sign);
-        this.signZone = this.add.zone(340,140,50,60);
+        this.signZone = this.add.zone(340, 140, 50, 60);
 
         this.water1 = this.add.zone(400, 350, 455, 80);
         this.physics.add.existing(this.water1, true);
@@ -67,7 +75,6 @@ const PhaserGame = () => {
         this.water2 = this.add.zone(505, 280, 450, 80);
         this.physics.add.existing(this.water2, true);
         this.physics.add.collider(this.player, this.water2);
-        
 
         this.physics.world.enable([this.houseZone, this.houseZone2, this.houseZone3, this.signZone]);
         [this.houseZone, this.houseZone2, this.houseZone3, this.signZone].forEach(zone => {
@@ -85,7 +92,7 @@ const PhaserGame = () => {
         this.physics.add.overlap(this.player, this.houseZone, () => { currentRoute.current = '/house1'; });
         this.physics.add.overlap(this.player, this.houseZone2, () => { currentRoute.current = '/house2'; });
         this.physics.add.overlap(this.player, this.houseZone3, () => { currentRoute.current = '/house3'; });
-        this.physics.add.overlap(this.player, this.signZone, () => {currentRoute.current = '/info';});
+        this.physics.add.overlap(this.player, this.signZone, () => { currentRoute.current = '/info'; });
 
         this.wasd = {
           up: this.input.keyboard.addKeys({
@@ -144,7 +151,7 @@ const PhaserGame = () => {
     gameRef.current = new Phaser.Game({
       type: Phaser.AUTO,
       width: 512,
-      height: 384,
+      height: isMobile ? 300 : 384,
       pixelArt: true,
       backgroundColor: '#000000',
       physics: {
@@ -165,7 +172,7 @@ const PhaserGame = () => {
         gameRef.current = null;
       }
     };
-  }, []);
+  }, [isMobile]);
 
   const btnStyle = {
     width: 60,
@@ -182,10 +189,10 @@ const PhaserGame = () => {
     <div style={{
       position: 'relative',
       width: '100vw',
-      height: '100vh',
+      height: 'calc(var(--vh, 1vh) * 100)',
       margin: 0,
       padding: 0,
-      overflow: 'hidden',
+      overflow: 'hidden', // 🟢 Only applies here, not globally
       backgroundColor: 'black',
     }}>
       <div id="phaser-container" style={{ width: '100%', height: '100%' }} />
@@ -201,7 +208,6 @@ const PhaserGame = () => {
           fontSize: '16px',
           zIndex: 10,
           pointerEvents: 'none',
-    
         }}>
           Press <b>E</b> to enter a house or interact
         </div>
@@ -210,7 +216,7 @@ const PhaserGame = () => {
       {isMobile && (
         <div style={{
           position: 'absolute',
-          bottom: '20px',
+          bottom: '10px',
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
