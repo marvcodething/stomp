@@ -47,7 +47,7 @@ environments are co-created and how, in the process, they become more than just 
 
         <Link href="https://marvinromero.online" target="_blank" rel="noopener noreferrer">
   <Image
-    src="/images/portrait.jpg"
+    src="/images/portrait.jpeg"
     alt="Author Portrait"
     width={320}
     height={320}
